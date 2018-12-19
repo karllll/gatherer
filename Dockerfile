@@ -20,19 +20,6 @@ RUN mkdir ${GATHERER_HOME} \
     && adduser --system --gecos "Gatherer user" --group gatherer \
     && chown -R gatherer:gatherer ${GATHERER_HOME}
 
-##
-# Make sure pip and setuptools are the latest versions
-##
-RUN pip install --upgrade pip setuptools
-
-# Install domain-scan
-RUN git clone https://github.com/18F/domain-scan /home/gatherer/domain-scan/ \
-    && pip install --upgrade -r /home/gatherer/domain-scan/requirements.txt \
-                             -r /home/gatherer/domain-scan/requirements-gatherers.txt
-
-# Install some dependencies for scripts/fed_hostnames.py
-RUN pip install --upgrade docopt pymongo pyyaml
-
 # Clean up aptitude cruft
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
